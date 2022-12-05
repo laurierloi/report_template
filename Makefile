@@ -1,17 +1,16 @@
+#-------------------------------------------------------------------------------
+# ENVIRONMENT VARIABLES BELOW
+#-------------------------------------------------------------------------------
 PANDOC ?= pandoc
-
+PROJECT ?= projet.md
+BIBLIOGRAPHY ?= bibliography.bib
+BIB_STYLE ?= universite-du-quebec-a-montreal-prenoms
 #-------------------------------------------------------------------------------
-# MODIFY PER PROJECT BELOW
-#-------------------------------------------------------------------------------
-INPUT=projet.md
-BIBLIOGRAPHY=bibliography.bib
-BIB_STYLE=universite-du-quebec-a-montreal
-#-------------------------------------------------------------------------------
-# MODIFY PER PROJECT ABOVE
+# ENVIRONMENT VARIABLES ABOVE
 #-------------------------------------------------------------------------------
 
 # only docx output
-OUTPUT=$(addprefix output/,$(INPUT:.md=.docx))
+OUTPUT=$(addprefix output/,$(PROJECT:.md=.docx))
 
 # Filters Used by pandoc
 DIAGRAM_FILTER_LINK=https://raw.githubusercontent.com/pandoc/lua-filters/master/diagram-generator/diagram-generator.lua
@@ -24,6 +23,7 @@ BIB_STYLE_FILE=$(addprefix styles/,$(addsuffix .csl,$(BIB_STYLE)))
 
 .PHONY: all
 all: $(OUTPUT)
+	echo $(PROJECT), $(BIBLIOGRAPHY), $(BIB_STYLE)
 
 .PHONY: clean
 clean:
@@ -44,7 +44,7 @@ $(DIAGRAM_FILTER):
 	@mkdir -p $(dir $(DIAGRAM_FILTER))
 	@wget $(DIAGRAM_FILTER_LINK) --output-document=$(DIAGRAM_FILTER)
 
-$(OUTPUT): $(INPUT) $(DIAGRAM_FILTER) $(BIB_STYLE_FILE)	$(BIBLIOGRAPHY)
+$(OUTPUT): $(PROJECT) $(DIAGRAM_FILTER) $(BIB_STYLE_FILE)	$(BIBLIOGRAPHY)
 	@mkdir -p $(dir $@)
 	@$(PANDOC) \
 		--csl=$(BIB_STYLE_FILE) \
