@@ -23,7 +23,6 @@ BIB_STYLE_FILE=$(addprefix styles/,$(addsuffix .csl,$(BIB_STYLE)))
 
 .PHONY: all
 all: $(OUTPUT)
-	echo $(PROJECT), $(BIBLIOGRAPHY), $(BIB_STYLE)
 
 .PHONY: clean
 clean:
