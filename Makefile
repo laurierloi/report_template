@@ -2,12 +2,13 @@
 # ENVIRONMENT VARIABLES BELOW
 #-------------------------------------------------------------------------------
 PANDOC ?= pandoc
-PROJECT ?= projet.md
+PROJECT ?= texte_devoir_fin_session.md
 BIBLIOGRAPHY ?= bibliography.bib
-BIB_STYLE ?= universite-du-quebec-a-montreal-prenoms
-#-------------------------------------------------------------------------------
-# ENVIRONMENT VARIABLES ABOVE
-#-------------------------------------------------------------------------------
+BIB_STYLE ?= universita-pontificia-salesiana-fr
+TEMPLATE ?= template/custom-reference.docx
+#------------  -------------------------------------------------------------------
+# ENVIRONMENT   VARIABLES ABOVE
+#------------  -------------------------------------------------------------------
 
 # only docx output
 OUTPUT=$(addprefix output/,$(PROJECT:.md=.docx))
@@ -49,4 +50,5 @@ $(OUTPUT): $(PROJECT) $(DIAGRAM_FILTER) $(BIB_STYLE_FILE)	$(BIBLIOGRAPHY)
 		--csl=$(BIB_STYLE_FILE) \
 		--bibliography=$(BIBLIOGRAPHY) \
 	    --lua-filter=$(DIAGRAM_FILTER) \
+		--reference-doc=$(TEMPLATE) \
 	    --output=$@ $<
